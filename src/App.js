@@ -20,7 +20,7 @@ import { useStreak } from './contexts/StreakContext';
 function App() {
   // App-wide state with contexts
   const { notifySuccess, notifyInfo } = useNotifications();
-  const { currentStreak, updateStreak } = useStreak();
+  const { updateStreak } = useStreak();
   
   const [hasOnboarded, setHasOnboarded] = useState(false);
   const [user, setUser] = useState(null); // null = not logged in

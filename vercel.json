@@ -1,0 +1,22 @@
+{
+  "name": "bodhi-ai-app",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "index.html"
+    }
+  ],
+  "env": {
+    "SKIP_PREFLIGHT_CHECK": "true",
+    "FAST_REFRESH": "false",
+    "REACT_APP_DISABLE_REFRESH": "true",
+    "CHOKIDAR_USEPOLLING": "true"
+  }
+}
