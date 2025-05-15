@@ -57,6 +57,12 @@ const Sidebar = ({ active, onNavigate, collapsed, setCollapsed }) => {
         <button className={`menu-item ${active === 'explorer' ? 'bg-white/20 font-bold' : ''} flex items-center gap-2 px-4 py-3 rounded transition`} onClick={() => onNavigate('explorer')}>
           <span role="img" aria-label="Deity Explorer">🕉️</span> {!collapsed && 'Deity Explorer'}
         </button>
+        <button className={`menu-item ${active === 'meditation' ? 'bg-white/20 font-bold' : ''} flex items-center gap-2 px-4 py-3 rounded transition`} onClick={() => onNavigate('meditation')}>
+          <span role="img" aria-label="Meditation Guides">🧘</span> {!collapsed && 'Meditation Guides'}
+        </button>
+        <button className={`menu-item ${active === 'profile' ? 'bg-white/20 font-bold' : ''} flex items-center gap-2 px-4 py-3 rounded transition`} onClick={() => onNavigate('profile')}>
+          <span role="img" aria-label="Profile">👤</span> {!collapsed && 'Profile'}
+        </button>
         <button className={`menu-item ${active === 'settings' ? 'bg-white/20 font-bold' : ''} flex items-center gap-2 px-4 py-3 rounded transition`} onClick={() => onNavigate('settings')}>
           <span role="img" aria-label="Settings">⚙️</span> {!collapsed && 'Settings'}
         </button>

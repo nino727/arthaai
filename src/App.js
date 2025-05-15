@@ -14,6 +14,7 @@ import Search from './pages/Search';
 import Calendar from './pages/Calendar';
 import DeityExplorer from './pages/DeityExplorer';
 import Settings from './pages/Settings';
+import MeditationGuides from './pages/MeditationGuides';
 import { useNotifications } from './contexts/NotificationContext';
 import { useStreak } from './contexts/StreakContext';
 
@@ -218,6 +219,11 @@ function App() {
             {screen === 'explorer' && (
               <motion.div key="explorer" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
                 <DeityExplorer />
+              </motion.div>
+            )}
+            {screen === 'meditation' && (
+              <motion.div key="meditation" variants={pageVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
+                <MeditationGuides />
               </motion.div>
             )}
           </AnimatePresence>
