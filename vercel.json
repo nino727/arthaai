@@ -1,18 +1,9 @@
 {
-  "name": "bodhi-ai-app",
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "index.html"
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "devCommand": "npm run start",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "create-react-app",
   "env": {
     "SKIP_PREFLIGHT_CHECK": "true",
     "FAST_REFRESH": "false",
