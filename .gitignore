@@ -6,7 +6,8 @@
 
 # misc
 .DS_Store
-.env
+# Allow .env for development
+# .env
 
 # logs
 npm-debug.log*
