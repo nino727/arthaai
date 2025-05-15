@@ -5,6 +5,9 @@ import Onboarding from './components/Onboarding';
 import Auth from './components/Auth';
 import Paywall from './components/Paywall';
 import Profile from './components/Profile';
+import Notification from './components/Notification';
+import Streaks from './components/Streaks';
+import LoadingSkeleton from './components/LoadingSkeleton';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import Search from './pages/Search';
@@ -22,16 +25,23 @@ function App() {
   const [theme, setTheme] = useState('light');
   const [fontSize, setFontSize] = useState(16);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [notification, setNotification] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [streak, setStreak] = useState(8); // Example streak count
 
   // Paywall-protected screens
   const protectedScreens = ['library-vedas', 'library-upanishads', 'library-ramayana', 'library-gita'];
 
   const handleNavigate = (nextScreen) => {
-    if (protectedScreens.includes(nextScreen) && !premium) {
-      setShowPaywall(true);
-    } else {
-      setScreen(nextScreen);
-    }
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      if (protectedScreens.includes(nextScreen) && !premium) {
+        setShowPaywall(true);
+      } else {
+        setScreen(nextScreen);
+      }
+    }, 500); // Simulate loading
   };
 
   // Onboarding
@@ -41,17 +51,23 @@ function App() {
 
   // Auth
   if (!user) {
-    return <Auth onAuth={() => setUser({ email: 'user@email.com' })} />;
+    return <Auth onAuth={() => {
+      setUser({ email: 'user@email.com' });
+      setNotification('Welcome back!');
+    }} />;
   }
 
   // Paywall
   if (showPaywall) {
-    return <Paywall onUnlock={() => { setPremium(true); setShowPaywall(false); }} onBack={() => setShowPaywall(false)} />;
+    return <Paywall onUnlock={() => { setPremium(true); setShowPaywall(false); setNotification('Premium unlocked!'); }} onBack={() => setShowPaywall(false)} />;
   }
 
   // Profile
   if (screen === 'profile') {
-    return <Profile user={user} onLogout={() => { setUser(null); setHasOnboarded(false); }} onBack={() => setScreen('home')} />;
+    return <div className="relative">
+      <Profile user={user} onLogout={() => { setUser(null); setHasOnboarded(false); }} onBack={() => setScreen('home')} />
+      <div className="absolute top-4 right-4"><Streaks count={streak} /></div>
+    </div>;
   }
 
   // Settings
@@ -65,14 +81,18 @@ function App() {
       <Sidebar active={screen} onNavigate={handleNavigate} collapsed={collapsed} setCollapsed={setCollapsed} />
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-h-screen">
-        <AnimatePresence mode="wait">
-          {screen === 'home' && <Home key="home" />}
-          {screen.startsWith('library') && <Library key="library" />}
-          {screen === 'search' && <Search key="search" />}
-          {screen === 'calendar' && <Calendar key="calendar" />}
-          {screen === 'explorer' && <DeityExplorer key="explorer" />}
-        </AnimatePresence>
+        {loading && <div className="p-8"><LoadingSkeleton height={64} /></div>}
+        {!loading && (
+          <AnimatePresence mode="wait">
+            {screen === 'home' && <Home key="home" />}
+            {screen.startsWith('library') && <Library key="library" />}
+            {screen === 'search' && <Search key="search" />}
+            {screen === 'calendar' && <Calendar key="calendar" />}
+            {screen === 'explorer' && <DeityExplorer key="explorer" />}
+          </AnimatePresence>
+        )}
       </main>
+      <Notification message={notification} onClose={() => setNotification('')} />
     </div>
   );
 }
